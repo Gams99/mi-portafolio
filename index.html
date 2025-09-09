@@ -26,82 +26,41 @@
     nav a { color: #f5f5f5; text-decoration: none; margin: 0 1rem; font-weight: 500; transition: color 0.3s; }
     nav a:hover { color: #ff004f; }
 
-    /* ====== DESKTOP / DEFAULT (como antes) ====== */
-    /* Horizontales 16:9: fullscreen y sin franjas */
-    section.video-block {
-      position: relative;
-      width: 100vw;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      background: #000;
-    }
-    @supports (min-height: 100svh) {
-      section.video-block { min-height: 100svh; }
-    }
-    section.video-block video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;       /* DESKTOP: full-bleed como antes */
-      object-position: center center;
-      display: block;
-      background: #000;
-    }
+    /* ===== HERO (arregla franja) ===== */
+    .hero { position: relative; width: 100vw; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background: url('https://picsum.photos/1600/900?grayscale') center/cover no-repeat; }
+    @supports (min-height: 100svh) { .hero { min-height: 100svh; } }
+    .hero-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(11,29,58,.6), rgba(0,0,0,.7)); }
+    .hero h1 { position: relative; z-index: 1; font-size: clamp(2rem, 6vw, 4rem); text-align: center; padding: .5rem 1.5rem; border-radius: 14px; text-shadow: 0 6px 30px rgba(0,0,0,.6); }
 
-    /* Verticales 9:16: fullscreen (cover en desktop) */
-    section.video-vertical {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-    @supports (height: 100svh) {
-      section.video-vertical { height: 100svh; }
-    }
-    section.video-vertical video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;       /* DESKTOP: full-bleed */
-      object-position: center center;
-      display: block;
-      background: #000;
-    }
+    /* ===== DESKTOP / DEFAULT ===== */
+    /* Horizontales 16:9: fullscreen (cover en desktop) */
+    section.video-block { position: relative; width: 100vw; min-height: 100vh; display:flex; justify-content:center; align-items:center; overflow:hidden; background:#000; }
+    @supports (min-height: 100svh) { section.video-block { min-height: 100svh; } }
+    section.video-block video { width: 100%; height: 100%; object-fit: cover; object-position:center; display:block; background:#000; }
+
+    /* Verticales 3 columnas en desktop */
+    section.vertical-grid { position: relative; width: 100vw; min-height: 100vh; display:flex; overflow:hidden; background:#000; }
+    @supports (min-height: 100svh) { section.vertical-grid { min-height: 100svh; } }
+    .vertical-col { flex:1; position:relative; height: 100%; overflow:hidden; }
+    .vertical-col video { width:100%; height:100%; object-fit: cover; display:block; background:#000; }
 
     /* Overlay reutilizable */
-    .videoOverlay {
-      position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:3;
-      pointer-events:none; background:linear-gradient(180deg, rgba(11,29,58,.45), rgba(0,0,0,.6));
-      opacity:.95; transition:opacity .6s ease;
-    }
+    .videoOverlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:3; pointer-events:none; background:linear-gradient(180deg, rgba(11,29,58,.45), rgba(0,0,0,.6)); opacity:.95; transition:opacity .6s ease; }
     .videoOverlay span { font:600 14px/1.2 Montserrat,system-ui,Arial; color:#fff; letter-spacing:.5px; text-align:center; padding:0 12px; }
 
     footer { text-align:center; padding:2rem; background:#000; letter-spacing:1px; }
 
-    /* ====== MOBILE OVERRIDES (solo teléfono/tablet) ====== */
+    /* ===== MOBILE OVERRIDES ===== */
     @media (max-width: 1024px) {
-      /* Horizontales 16:9: que se vean completos, sin recortes ni franjas raras */
-      section.video-block { min-height: auto; height: auto; width: 100vw; }
-      section.video-block video {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 16 / 9;  /* contenedor exacto 16:9 */
-        object-fit: contain;    /* muestra TODO el cuadro */
-      }
+      /* Horizontales 16:9: que se vean completos, sin recortes */
+      section.video-block { min-height:auto; height:auto; width:100vw; }
+      section.video-block video { width:100%; height:auto; aspect-ratio:16/9; object-fit: contain; }
 
-      /* Verticales 9:16: pantalla completa con cuadro completo */
-      section.video-vertical { height: 100svh; }
-      section.video-vertical video {
-        height: 100%;
-        width: auto;
-        aspect-ratio: 9 / 16;
-        object-fit: contain;    /* evita cortes, pueden quedar barras laterales */
-      }
+      /* Verticales 9:16: uno por pantalla, apilados */
+      section.vertical-grid { display:block; min-height:auto; }
+      .vertical-col { width:100vw; height: 100vh; }
+      @supports (height: 100svh) { .vertical-col { height: 100svh; } }
+      .vertical-col video { width:auto; height:100%; object-fit: contain; }
     }
   </style>
 </head>
@@ -118,6 +77,7 @@
   </header>
 
   <section id="inicio" class="hero">
+    <div class="hero-overlay"></div>
     <h1>Realizador Audiovisual</h1>
   </section>
 
@@ -137,28 +97,26 @@
     </video>
   </section>
 
-  <!-- vertical1 -->
-  <section id="vertical1" class="video-vertical">
-    <div class="videoOverlay"><span>Cargando…</span></div>
-    <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
-      <source src="/assets/vertical1.mp4?v=1" type="video/mp4">
-    </video>
-  </section>
-
-  <!-- vertical2 -->
-  <section id="vertical2" class="video-vertical">
-    <div class="videoOverlay"><span>Cargando…</span></div>
-    <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
-      <source src="/assets/vertical2.mp4?v=1" type="video/mp4">
-    </video>
-  </section>
-
-  <!-- vertical3 -->
-  <section id="vertical3" class="video-vertical">
-    <div class="videoOverlay"><span>Cargando…</span></div>
-    <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
-      <source src="/assets/vertical3.mp4?v=1" type="video/mp4">
-    </video>
+  <!-- verticales agrupados (3 columnas en desktop, 1x1 en móvil) -->
+  <section id="verticales" class="vertical-grid">
+    <div class="vertical-col">
+      <div class="videoOverlay"><span>Cargando…</span></div>
+      <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="metadata">
+        <source src="/assets/vertical1.mp4?v=1" type="video/mp4">
+      </video>
+    </div>
+    <div class="vertical-col">
+      <div class="videoOverlay"><span>Cargando…</span></div>
+      <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="metadata">
+        <source src="/assets/vertical2.mp4?v=1" type="video/mp4">
+      </video>
+    </div>
+    <div class="vertical-col">
+      <div class="videoOverlay"><span>Cargando…</span></div>
+      <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="metadata">
+        <source src="/assets/vertical3.mp4?v=1" type="video/mp4">
+      </video>
+    </div>
   </section>
 
   <!-- video3 -->
