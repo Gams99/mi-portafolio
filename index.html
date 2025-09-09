@@ -26,26 +26,31 @@
     nav a { color: #f5f5f5; text-decoration: none; margin: 0 1rem; font-weight: 500; transition: color 0.3s; }
     nav a:hover { color: #ff004f; }
 
-    /* Videos horizontales 16:9 */
+    /* ====== DESKTOP / DEFAULT (como antes) ====== */
+    /* Horizontales 16:9: fullscreen y sin franjas */
     section.video-block {
       position: relative;
       width: 100vw;
-      background: #000;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      background: #000;
+    }
+    @supports (min-height: 100svh) {
+      section.video-block { min-height: 100svh; }
     }
     section.video-block video {
       width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 9;
-      object-fit: contain;   /* muestra siempre completo */
-      background: #000;
+      height: 100%;
+      object-fit: cover;       /* DESKTOP: full-bleed como antes */
+      object-position: center center;
       display: block;
+      background: #000;
     }
 
-    /* Videos verticales 9:16 */
+    /* Verticales 9:16: fullscreen (cover en desktop) */
     section.video-vertical {
       position: relative;
       width: 100vw;
@@ -60,12 +65,12 @@
       section.video-vertical { height: 100svh; }
     }
     section.video-vertical video {
+      width: 100%;
       height: 100%;
-      width: auto;
-      aspect-ratio: 9 / 16;
-      object-fit: contain;
-      background: #000;
+      object-fit: cover;       /* DESKTOP: full-bleed */
+      object-position: center center;
       display: block;
+      background: #000;
     }
 
     /* Overlay reutilizable */
@@ -77,6 +82,27 @@
     .videoOverlay span { font:600 14px/1.2 Montserrat,system-ui,Arial; color:#fff; letter-spacing:.5px; text-align:center; padding:0 12px; }
 
     footer { text-align:center; padding:2rem; background:#000; letter-spacing:1px; }
+
+    /* ====== MOBILE OVERRIDES (solo teléfono/tablet) ====== */
+    @media (max-width: 1024px) {
+      /* Horizontales 16:9: que se vean completos, sin recortes ni franjas raras */
+      section.video-block { min-height: auto; height: auto; width: 100vw; }
+      section.video-block video {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;  /* contenedor exacto 16:9 */
+        object-fit: contain;    /* muestra TODO el cuadro */
+      }
+
+      /* Verticales 9:16: pantalla completa con cuadro completo */
+      section.video-vertical { height: 100svh; }
+      section.video-vertical video {
+        height: 100%;
+        width: auto;
+        aspect-ratio: 9 / 16;
+        object-fit: contain;    /* evita cortes, pueden quedar barras laterales */
+      }
+    }
   </style>
 </head>
 <body>
