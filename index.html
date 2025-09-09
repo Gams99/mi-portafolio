@@ -29,7 +29,7 @@
     /* ===== HERO con video ===== */
     .hero-video { position: relative; width: 100vw; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background:#000; animation: fadeIn 2s ease both; }
     @supports (min-height: 100svh) { .hero-video { min-height: 100svh; } }
-    .hero-video video { width:100%; height:100%; object-fit: cover; }
+    .hero-video video { position:absolute; inset:0; width:100%; height:100%; object-fit: cover; z-index:0; }
     .hero-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(11,29,58,.35), rgba(0,0,0,.65)); z-index:1; }
     .hero-content { position: relative; z-index: 2; text-align: center; animation: fadeUp 2s ease both; }
     .hero-content h1 { font-size: clamp(2rem, 6vw, 4rem); margin-bottom:.5rem; text-shadow:0 6px 30px rgba(0,0,0,.6); }
@@ -47,7 +47,7 @@
     @supports (min-height: 100svh) { section.vertical-grid { min-height: 100svh; } }
     .vertical-col { flex:1; position:relative; height: 100%; overflow:hidden; display:flex; justify-content:center; align-items:center; }
     .vertical-col video { width:100%; height:100%; object-fit: cover; display:block; background:#000; filter:brightness(0.9); }
-    .vertical-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#fff; font-size:2rem; font-weight:600; z-index:5; text-shadow:0 4px 20px rgba(0,0,0,.6); animation: fadeUp 2s ease both; }
+    .vertical-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#fff; font-size:2rem; font-weight:600; z-index:5; text-shadow:0 4px 20px rgba(0,0,0,.6); animation: fadeUp 2s ease both; text-align:center; }
 
     .videoOverlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:3; pointer-events:none; background:linear-gradient(180deg, rgba(11,29,58,.45), rgba(0,0,0,.6)); opacity:.95; transition:opacity .6s ease; }
     .videoOverlay span { font:600 14px/1.2 Montserrat,system-ui,Arial; color:#fff; letter-spacing:.5px; text-align:center; padding:0 12px; }
@@ -63,6 +63,7 @@
       .vertical-col { width:100vw; height: 100vh; }
       @supports (height: 100svh) { .vertical-col { height: 100svh; } }
       .vertical-col video { width:auto; height:100%; object-fit: contain; }
+      .vertical-text { font-size:1.5rem; padding:0 1rem; }
     }
 
     /* ===== ANIMACIONES ===== */
@@ -84,7 +85,7 @@
 
   <!-- Hero con video1 -->
   <section id="inicio" class="hero-video">
-    <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
+    <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto" poster="/assets/video1-poster.jpg">
       <source src="/assets/video1.mp4?v=2" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
@@ -182,6 +183,13 @@
 
       const params = new URLSearchParams(location.search);
       if (params.get('debug') === '1') vids.forEach(v => v.setAttribute('controls','controls'));
+
+      // Fallback: si el hero no reproduce en 1s, fuerza play
+      setTimeout(()=>{
+        const hero = document.querySelector('#inicio video');
+        if (!hero) return;
+        hero.play().catch(()=>{});
+      }, 1000);
     })();
   </script>
 </body>
