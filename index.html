@@ -102,9 +102,11 @@
 
   <!-- Fullscreen 1 con video de Google Drive + Fallback -->
   <section id="portafolio1" class="portfolio-fullscreen">
-    <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="" style="background:#000">
-      <!-- Fuente principal: Google Drive -->
-      <source src=\"/assets/video1.mp4?v=1\" type=\"video/mp4\">
+    <div id="videoOverlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;background:linear-gradient(180deg, rgba(11,29,58,.5), rgba(0,0,0,.6));opacity:.9;transition:opacity .6s ease;">
+      <span style="font:600 14px/1.2 Montserrat,system-ui,Arial;color:#fff;letter-spacing:.5px;">Cargando video…</span>
+    </div>
+    <video id="heroVideo" autoplay muted playsinline webkit-playsinline loop preload="auto" poster="" style="width:100%;height:100%;object-fit:cover;display:block;background:#000">
+      <source src="/assets/video1.mp4?v=2" type="video/mp4">
       Tu navegador no soporta video HTML5.
     </video>
   </section>
@@ -190,9 +192,48 @@
       }).catch(e => console.warn('HEAD fallo', e));
     })();
   </script>
+  <script>
+    (function(){
+      const v = document.getElementById('heroVideo');
+      const overlay = document.getElementById('videoOverlay');
+      if (!v) return;
+
+      // Asegurar flags para autoplay en todos los navegadores
+      v.muted = true; v.defaultMuted = true; v.playsInline = true; v.setAttribute('playsinline',''); v.setAttribute('webkit-playsinline','');
+
+      const hideOverlay = () => { if (overlay) overlay.style.opacity = '0'; setTimeout(()=>{ if (overlay) overlay.style.display='none'; }, 700); };
+      const showOverlayMsg = (msg) => { if (!overlay) return; overlay.style.display='flex'; overlay.style.opacity='.95'; overlay.querySelector('span').textContent = msg || 'Cargando video…'; };
+
+      // Intentar reproducir apenas pueda
+      const tryPlay = () => {
+        v.play().then(hideOverlay).catch(err => {
+          // Si falla autoplay, pedimos interacción
+          showOverlayMsg('Toca o haz click para reproducir');
+        });
+      };
+
+      v.addEventListener('loadeddata', () => { /* primer frame disponible */ });
+      v.addEventListener('canplay', tryPlay);
+      v.addEventListener('play', hideOverlay);
+      v.addEventListener('waiting', () => showOverlayMsg('Cargando…'));
+      v.addEventListener('stalled', () => showOverlayMsg('Reconectando…'));
+      v.addEventListener('error', () => showOverlayMsg('No se pudo cargar el video'));
+
+      // Fallback por interacción del usuario
+      ['click','touchstart','keydown','scroll'].forEach(ev => {
+        window.addEventListener(ev, function one(){
+          tryPlay(); window.removeEventListener(ev, one, { once:true });
+        }, { once:true, passive:true });
+      });
+
+      // Depuración opcional
+      const params = new URLSearchParams(location.search);
+      if (params.get('debug') === '1') v.setAttribute('controls','controls');
+
+      // HEAD para confirmar disponibilidad
+      fetch('/assets/video1.mp4', { method:'HEAD' }).then(r => console.log('HEAD /assets/video1.mp4 →', r.status)).catch(console.warn);
+    })();
+  </script>
 </body>
 </html>
 
-
-</body>
-</html>
