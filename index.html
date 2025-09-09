@@ -246,6 +246,20 @@
   <script>
     // Autoplay seguro para todos los .autoVideo (incluye verticales y fullscreen)
     (function(){
+      // Inyectar overlay si falta (para columnas verticales)
+      document.querySelectorAll('.portfolio-vertical .video').forEach(col => {
+        if (!col.querySelector('.videoOverlay')) {
+          const ov = document.createElement('div');
+          ov.className = 'videoOverlay';
+          ov.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;background:linear-gradient(180deg, rgba(11,29,58,.35), rgba(0,0,0,.5));opacity:.9;transition:opacity .6s ease;';
+          const span = document.createElement('span');
+          span.textContent = 'Cargando…';
+          span.style.cssText = 'font:600 14px/1.2 Montserrat,system-ui,Arial;color:#fff;letter-spacing:.5px;';
+          ov.appendChild(span);
+          col.prepend(ov);
+        }
+      });
+
       const vids = document.querySelectorAll('.autoVideo');
       vids.forEach(v => {
         v.muted = true; v.defaultMuted = true; v.playsInline = true; v.setAttribute('playsinline',''); v.setAttribute('webkit-playsinline','');
@@ -260,10 +274,11 @@
         v.addEventListener('error', ()=>show('No se pudo cargar'));
         ['click','touchstart','keydown','scroll'].forEach(ev => window.addEventListener(ev, function one(){ tryPlay(); window.removeEventListener(ev, one, {once:true}); }, {once:true, passive:true}));
       });
+
+      const params = new URLSearchParams(location.search);
+      if (params.get('debug') === '1') vids.forEach(v => v.setAttribute('controls','controls'));
     })();
   </script>
 </body>
 </html>
 
-</body>
-</html>
