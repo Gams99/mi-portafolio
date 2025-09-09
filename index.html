@@ -98,10 +98,11 @@
     <h1>Realizador Audiovisual</h1>
   </section>
 
-  <!-- Fullscreen 1 con video de Google Drive -->
+  <!-- Fullscreen 1 con video de Google Drive + Fallback -->
   <section id="portafolio1" class="portfolio-fullscreen">
-    <video autoplay muted loop playsinline>
-      <source src="https://drive.google.com/uc?export=download&id=1ZmRJI3WSdsJeYaO0GxfJtaS6Qb5eamOH" type="video/mp4">
+    <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="" style="background:#000">
+      <!-- Fuente principal: Google Drive -->
+      <source id="srcDrive" src="https://drive.google.com/uc?export=download&id=1ZmRJI3WSdsJeYaO0GxfJtaS6Qb5eamOH" type="video/mp4">
       Tu navegador no soporta video HTML5.
     </video>
   </section>
