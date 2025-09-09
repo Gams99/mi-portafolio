@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portafolio - Realizador Audiovisual</title>
+  <title>Portafolio - Gabriel Muñoz</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
 
@@ -26,42 +26,48 @@
     nav a { color: #f5f5f5; text-decoration: none; margin: 0 1rem; font-weight: 500; transition: color 0.3s; }
     nav a:hover { color: #ff004f; }
 
-    /* ===== HERO (arregla franja) ===== */
-    .hero { position: relative; width: 100vw; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background: url('https://picsum.photos/1600/900?grayscale') center/cover no-repeat; }
-    @supports (min-height: 100svh) { .hero { min-height: 100svh; } }
-    .hero-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(11,29,58,.6), rgba(0,0,0,.7)); }
-    .hero h1 { position: relative; z-index: 1; font-size: clamp(2rem, 6vw, 4rem); text-align: center; padding: .5rem 1.5rem; border-radius: 14px; text-shadow: 0 6px 30px rgba(0,0,0,.6); }
+    /* ===== HERO con video ===== */
+    .hero-video { position: relative; width: 100vw; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background:#000; animation: fadeIn 2s ease both; }
+    @supports (min-height: 100svh) { .hero-video { min-height: 100svh; } }
+    .hero-video video { width:100%; height:100%; object-fit: cover; }
+    .hero-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(11,29,58,.35), rgba(0,0,0,.65)); z-index:1; }
+    .hero-content { position: relative; z-index: 2; text-align: center; animation: fadeUp 2s ease both; }
+    .hero-content h1 { font-size: clamp(2rem, 6vw, 4rem); margin-bottom:.5rem; text-shadow:0 6px 30px rgba(0,0,0,.6); }
+    .hero-content h2 { font-size: clamp(1.2rem, 3vw, 2rem); font-weight:300; text-shadow:0 4px 20px rgba(0,0,0,.6); }
 
-    /* ===== DESKTOP / DEFAULT ===== */
-    /* Horizontales 16:9: fullscreen (cover en desktop) */
+    /* ===== SECCIONES VIDEO ===== */
+    section.video-block, section.vertical-grid { opacity:0; transform:translateY(40px); transition: opacity 1s ease, transform 1s ease; }
+    section.visible { opacity:1; transform:translateY(0); }
+
     section.video-block { position: relative; width: 100vw; min-height: 100vh; display:flex; justify-content:center; align-items:center; overflow:hidden; background:#000; }
     @supports (min-height: 100svh) { section.video-block { min-height: 100svh; } }
-    section.video-block video { width: 100%; height: 100%; object-fit: cover; object-position:center; display:block; background:#000; }
+    section.video-block video { width: 100%; height: 100%; object-fit: cover; display:block; background:#000; }
 
-    /* Verticales 3 columnas en desktop */
     section.vertical-grid { position: relative; width: 100vw; min-height: 100vh; display:flex; overflow:hidden; background:#000; }
     @supports (min-height: 100svh) { section.vertical-grid { min-height: 100svh; } }
-    .vertical-col { flex:1; position:relative; height: 100%; overflow:hidden; }
-    .vertical-col video { width:100%; height:100%; object-fit: cover; display:block; background:#000; }
+    .vertical-col { flex:1; position:relative; height: 100%; overflow:hidden; display:flex; justify-content:center; align-items:center; }
+    .vertical-col video { width:100%; height:100%; object-fit: cover; display:block; background:#000; filter:brightness(0.9); }
+    .vertical-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#fff; font-size:2rem; font-weight:600; z-index:5; text-shadow:0 4px 20px rgba(0,0,0,.6); animation: fadeUp 2s ease both; }
 
-    /* Overlay reutilizable */
     .videoOverlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:3; pointer-events:none; background:linear-gradient(180deg, rgba(11,29,58,.45), rgba(0,0,0,.6)); opacity:.95; transition:opacity .6s ease; }
     .videoOverlay span { font:600 14px/1.2 Montserrat,system-ui,Arial; color:#fff; letter-spacing:.5px; text-align:center; padding:0 12px; }
 
-    footer { text-align:center; padding:2rem; background:#000; letter-spacing:1px; }
+    footer { text-align:center; padding:2rem; background:#000; letter-spacing:1px; animation: fadeIn 2s ease both; }
 
-    /* ===== MOBILE OVERRIDES ===== */
+    /* ===== MOBILE ===== */
     @media (max-width: 1024px) {
-      /* Horizontales 16:9: que se vean completos, sin recortes */
       section.video-block { min-height:auto; height:auto; width:100vw; }
       section.video-block video { width:100%; height:auto; aspect-ratio:16/9; object-fit: contain; }
 
-      /* Verticales 9:16: uno por pantalla, apilados */
       section.vertical-grid { display:block; min-height:auto; }
       .vertical-col { width:100vw; height: 100vh; }
       @supports (height: 100svh) { .vertical-col { height: 100svh; } }
       .vertical-col video { width:auto; height:100%; object-fit: contain; }
     }
+
+    /* ===== ANIMACIONES ===== */
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    @keyframes fadeUp { from {opacity:0; transform:translateY(40px);} to {opacity:1; transform:translateY(0);} }
   </style>
 </head>
 <body>
@@ -70,23 +76,22 @@
       <h3>Mi Portafolio</h3>
       <div>
         <a href="#inicio">Inicio</a>
-        <a href="#portafolio1">Portafolio</a>
+        <a href="#portafolio2">Portafolio</a>
         <a href="#contacto">Contacto</a>
       </div>
     </nav>
   </header>
 
-  <section id="inicio" class="hero">
-    <div class="hero-overlay"></div>
-    <h1>Realizador Audiovisual</h1>
-  </section>
-
-  <!-- video1 -->
-  <section id="portafolio1" class="video-block">
-    <div class="videoOverlay"><span>Cargando video…</span></div>
+  <!-- Hero con video1 -->
+  <section id="inicio" class="hero-video">
     <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
       <source src="/assets/video1.mp4?v=2" type="video/mp4">
     </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Gabriel Muñoz</h1>
+      <h2>Realizador Audiovisual</h2>
+    </div>
   </section>
 
   <!-- video2 -->
@@ -97,7 +102,7 @@
     </video>
   </section>
 
-  <!-- verticales agrupados (3 columnas en desktop, 1x1 en móvil) -->
+  <!-- verticales agrupados -->
   <section id="verticales" class="vertical-grid">
     <div class="vertical-col">
       <div class="videoOverlay"><span>Cargando…</span></div>
@@ -117,6 +122,7 @@
         <source src="/assets/vertical3.mp4?v=1" type="video/mp4">
       </video>
     </div>
+    <div class="vertical-text">textotextotexto</div>
   </section>
 
   <!-- video3 -->
@@ -128,11 +134,10 @@
   </section>
 
   <footer>
-    <p>&copy; 2025 Mi Nombre | Realizador Audiovisual</p>
+    <p>&copy; 2025 Gabriel Muñoz | Realizador Audiovisual</p>
   </footer>
 
   <script>
-    // Autoplay + optimización móvil: pausa fuera de pantalla, precarga mínima en móvil
     (function(){
       const vids = Array.from(document.querySelectorAll('.autoVideo'));
 
@@ -154,6 +159,7 @@
           if (e.isIntersecting) {
             if (v.preload === 'metadata') { v.preload = 'auto'; v.load?.(); }
             setTimeout(()=>tryPlay(v), 50);
+            v.closest('section').classList.add('visible');
           } else {
             v.pause();
           }
