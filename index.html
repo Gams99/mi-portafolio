@@ -47,7 +47,8 @@
     @supports (min-height: 100svh) { section.vertical-grid { min-height: 100svh; } }
     .vertical-col { flex:1; position:relative; height: 100%; overflow:hidden; display:flex; justify-content:center; align-items:center; }
     .vertical-col video { width:100%; height:100%; object-fit: cover; display:block; background:#000; filter:brightness(0.9); }
-    .vertical-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#fff; font-size: clamp(2rem, 6vw, 4rem); font-weight:600; z-index:5; text-shadow:0 6px 30px rgba(0,0,0,.6); animation: fadeUp 2s ease both; text-align:center; }
+    .vertical-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none}
+    .vertical-text{color:#fff;font-size: clamp(2rem, 6vw, 4rem);font-weight:600;text-shadow:0 6px 30px rgba(0,0,0,.6);text-align:center;padding:0 1rem}
 
     .videoOverlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:3; pointer-events:none; background:linear-gradient(180deg, rgba(11,29,58,.45), rgba(0,0,0,.6)); opacity:.95; transition:opacity .6s ease; }
     .videoOverlay span { font:600 14px/1.2 Montserrat,system-ui,Arial; color:#fff; letter-spacing:.5px; text-align:center; padding:0 12px; }
@@ -74,6 +75,28 @@
     /* ===== ANIMACIONES ===== */
     @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
     @keyframes fadeUp { from {opacity:0; transform:translateY(40px);} to {opacity:1; transform:translateY(0);} }
+      /* ===== CAPTIONS ===== */
+    .video-caption{position:absolute;z-index:4;pointer-events:none;background:rgba(0,0,0,.45);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);padding:.35rem .6rem;border-radius:10px;font-weight:600;letter-spacing:.3px;line-height:1;white-space:nowrap;font-size:clamp(.75rem,1.6vw,.95rem);opacity:.95}
+    .video-caption.bl{left:16px;bottom:16px}
+    .video-caption.br{right:16px;bottom:16px}
+    @media (max-width:1024px){.video-caption{font-size:.8rem;padding:.3rem .55rem}}
+
+    /* ===== SECCIÓN SPLIT (texto izquierda / video derecha) ===== */
+    .split-section{position:relative;width:100vw;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;gap:0;background:#000;overflow:hidden}
+    @supports (min-height:100svh){.split-section{min-height:100svh}}
+    .split-text{display:flex;align-items:center;justify-content:center;padding:8vw}
+    .split-text .inner{max-width:640px}
+    .split-text h2{font-size:clamp(1.8rem,4vw,3rem);margin-bottom:.6rem}
+    .split-text p{font-size:clamp(1rem,1.6vw,1.125rem);opacity:.9}
+    .split-video{position:relative}
+    .split-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000;display:block}
+
+    @media (max-width:1024px){
+      .split-section{grid-template-columns:1fr;}
+      .split-text{order:1;padding:10vw 6vw}
+      .split-video{order:2;min-height:auto;aspect-ratio:16/9}
+      .split-video video{position:relative;height:100%;}
+    }
   </style>
 </head>
 <body>
@@ -133,7 +156,7 @@
       </video>
       <div class="video-caption br">Filmmaker — Vertical 03</div>
     </div>
-    <div class="vertical-text">textotextotexto</div>
+    <div class="vertical-overlay"><div class="vertical-text">textotextotexto</div></div>
   </section>
 
   <!-- video3 -->
@@ -143,6 +166,22 @@
       <source src="/assets/video3.mp4?v=1" type="video/mp4">
     </video>
     <div class="video-caption bl">Filmmaker — Proyecto 03</div>
+  </section>
+
+  <!-- Sección Reel: texto a la izquierda, video con sonido a la derecha -->
+  <section id="reel" class="split-section">
+    <div class="split-text">
+      <div class="inner">
+        <h2>Reel Audiovisual</h2>
+        <p>Un montaje breve con lo mejor de mi trabajo reciente: dirección, cámara, color y montaje. En esta sección podrás reproducir el video con sonido para apreciar el diseño sonoro y la musicalización. (Texto de ejemplo: luego lo reemplazamos por tu copy final).</p>
+      </div>
+    </div>
+    <div class="split-video">
+      <video controls playsinline preload="metadata" poster="/assets/reel-poster.jpg">
+        <source src="/assets/reel.mp4?v=1" type="video/mp4">
+        Tu navegador no soporta video HTML5.
+      </video>
+    </div>
   </section>
 
   <footer>
