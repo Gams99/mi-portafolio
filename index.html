@@ -7,7 +7,9 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://www.youtube-nocookie.com">
-  <link rel="preconnect" href="https://i.ytimg.com">
+  <link rel=\"preconnect\" href=\"https://i.ytimg.com\">
+  <!-- Preload del video local para mejorar el primer render -->
+  <link rel="preload" as="video" href="/assets/video1.mp4" type="video/mp4">
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -102,7 +104,7 @@
   <section id="portafolio1" class="portfolio-fullscreen">
     <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="" style="background:#000">
       <!-- Fuente principal: Google Drive -->
-      <source src=\"assets/video1.mp4\" type=\"video/mp4\">
+      <source src=\"/assets/video1.mp4?v=1\" type=\"video/mp4\">
       Tu navegador no soporta video HTML5.
     </video>
   </section>
@@ -160,8 +162,37 @@
       }
     })();
   </script>
+  <script>
+    // Debug mínimo para detectar rutas/errores de reproducción
+    (function(){
+      const v = document.getElementById('heroVideo');
+      if (!v) return;
+      v.addEventListener('error', () => {
+        console.error('Error reproduciendo el video. Verifica la ruta /assets/video1.mp4 y el tamaño del archivo.');
+        const note = document.createElement('div');
+        note.textContent = '⚠️ No se pudo cargar el video (/assets/video1.mp4). Revisa nombre, mayúsculas/minúsculas y que esté en la rama correcta.';
+        note.style.cssText = 'position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.6);padding:10px 12px;border-radius:8px;font:14px/1.4 monospace;z-index:5';
+        document.getElementById('portafolio1').appendChild(note);
+      });
+      v.addEventListener('canplay', () => {
+        console.log('✅ Video listo para reproducirse');
+      });
+
+      // Si añadiste ?debug=1 a la URL, mostramos controles
+      const params = new URLSearchParams(location.search);
+      if (params.get('debug') === '1') {
+        v.setAttribute('controls', 'controls');
+      }
+
+      // Comprobación rápida de existencia del archivo en el servidor
+      fetch('/assets/video1.mp4', { method: 'HEAD' }).then(r => {
+        console.log('HEAD /assets/video1.mp4 →', r.status, r.statusText);
+      }).catch(e => console.warn('HEAD fallo', e));
+    })();
+  </script>
 </body>
 </html>
+
 
 </body>
 </html>
