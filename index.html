@@ -6,10 +6,6 @@
   <title>Portafolio - Realizador Audiovisual</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://www.youtube-nocookie.com">
-  <link rel=\"preconnect\" href=\"https://i.ytimg.com\">
-  <!-- Preload del video local para mejorar el primer render -->
-  <link rel="preload" as="video" href="/assets/video1.mp4" type="video/mp4">
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,62 +19,34 @@
       overflow-x: hidden;
     }
 
-    header {
-      background: rgba(0,0,0,0.85);
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-    }
-
+    header { background: rgba(0,0,0,0.85); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
     nav { display: flex; justify-content: space-between; align-items: center; }
     nav a { color: #f5f5f5; text-decoration: none; margin: 0 1rem; font-weight: 500; transition: color 0.3s; }
     nav a:hover { color: #ff004f; }
 
+    /* Secciones fullscreen con gradiente de fondo */
     section {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      opacity: 0;
-      transform: translateY(50px) scale(0.98);
-      transition: opacity 1.2s ease, transform 1.2s ease;
-      overflow: hidden;
+      position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; overflow: hidden;
       background: linear-gradient(180deg, #0b1d3a 0%, #000 100%);
     }
-    section.visible { opacity: 1; transform: translateY(0) scale(1); }
 
+    /* Hero */
     .hero { background: url("https://picsum.photos/1600/900?grayscale") center/cover no-repeat; }
     .hero::after { content:''; position:absolute; inset:0; background: rgba(11,29,58,0.5); z-index:1; }
-    .hero h1 { position:relative; z-index:2; font-size: 3.5rem; padding: 1rem 3rem; border-radius: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); opacity:0; transform: translateY(20px); transition: opacity 1.5s ease, transform 1.5s ease; }
-    .hero.visible h1 { opacity:1; transform: translateY(0); }
+    .hero h1 { position:relative; z-index:2; font-size: 3.5rem; padding: 1rem 3rem; border-radius: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
 
-    h2 { margin-bottom: 2rem; color: #ff004f; font-weight: 700; }
+    /* Fullscreen video container */
+    .portfolio-fullscreen video { width: 100%; height: 100%; object-fit: cover; display:block; background:#000; }
 
-    .portfolio-fullscreen { width: 100vw; height: 100vh; }
-    .portfolio-fullscreen iframe, .portfolio-fullscreen video { width: 100%; height: 100%; border: 0; display:block; object-fit: cover; }
-
+    /* 3 columnas verticales */
     .portfolio-vertical { display: flex; flex-direction: row; width: 100vw; height: 100vh; }
-    .portfolio-vertical .video { flex:1; height:100%; position:relative; overflow:hidden; filter: brightness(0.35); transition: filter 0.6s ease; }
-    .portfolio-vertical .video:hover { filter: brightness(1); }
-    .portfolio-vertical .video::after { content:''; position:absolute; inset:0; background: rgba(11,29,58,0.35); transition: background 0.6s ease; z-index:1; }
-    .portfolio-vertical .video:hover::after { background: rgba(11,29,58,0); }
-    .portfolio-vertical .video video { width:100%; height:100%; border:0; display:block; position:relative; z-index:2; object-fit:cover; }
+    .portfolio-vertical .video { flex:1; height:100%; position:relative; overflow:hidden; }
+    .portfolio-vertical .video video { width:100%; height:100%; object-fit: cover; display:block; background:#000; }
+    @media (max-width: 1024px) { .portfolio-vertical { flex-direction: column; } .portfolio-vertical .video { height:33.33vh; } }
 
-    @media (max-width: 1024px) {
-      .portfolio-vertical { flex-direction: column; }
-      .portfolio-vertical .video { height: 33.33vh; }
-    }
-
-    .contacto form { display:flex; flex-direction:column; gap:1rem; width:100%; max-width:500px; position:relative; z-index:2; }
-    .contacto input, .contacto textarea { padding:1rem; border:none; border-radius:10px; font-size:1rem; background: rgba(255,255,255,0.05); color:#fff; }
-    .contacto input:focus, .contacto textarea:focus { outline:none; background: rgba(255,255,255,0.1); }
-    .contacto button { padding:1rem; background:#ff004f; border:none; color:#fff; font-size:1rem; border-radius:10px; cursor:pointer; transition: background 0.3s, transform 0.3s; }
-    .contacto button:hover { background:#e60047; transform: scale(1.05); }
+    /* Overlay reutilizable */
+    .videoOverlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:3; pointer-events:none; background:linear-gradient(180deg, rgba(11,29,58,.45), rgba(0,0,0,.6)); opacity:.95; transition:opacity .6s ease; }
+    .videoOverlay span { font:600 14px/1.2 Montserrat,system-ui,Arial; color:#fff; letter-spacing:.5px; }
 
     footer { text-align:center; padding:2rem; background:#000; letter-spacing:1px; }
   </style>
@@ -90,7 +58,6 @@
       <div>
         <a href="#inicio">Inicio</a>
         <a href="#portafolio1">Portafolio</a>
-        <a href="#sobre-mi">Sobre mí</a>
         <a href="#contacto">Contacto</a>
       </div>
     </nav>
@@ -100,172 +67,68 @@
     <h1>Realizador Audiovisual</h1>
   </section>
 
-  <!-- Fullscreen 1 con video de Google Drive + Fallback -->
+  <!-- ORDEN SOLICITADO: video1, video2, (vertical1-3), video3 -->
+
+  <!-- video1 -->
   <section id="portafolio1" class="portfolio-fullscreen">
-    <div id="videoOverlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;background:linear-gradient(180deg, rgba(11,29,58,.5), rgba(0,0,0,.6));opacity:.9;transition:opacity .6s ease;">
-      <span style="font:600 14px/1.2 Montserrat,system-ui,Arial;color:#fff;letter-spacing:.5px;">Cargando video…</span>
-    </div>
-    <video id="heroVideo" autoplay muted playsinline webkit-playsinline loop preload="auto" poster="" style="width:100%;height:100%;object-fit:cover;display:block;background:#000">
+    <div class="videoOverlay"><span>Cargando video…</span></div>
+    <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
       <source src="/assets/video1.mp4?v=2" type="video/mp4">
-      Tu navegador no soporta video HTML5.
     </video>
   </section>
 
-  <!-- Fullscreen 2 con video local video2 -->
-  <section class="portfolio-fullscreen">
-    <div id="videoOverlay2" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;background:linear-gradient(180deg, rgba(11,29,58,.5), rgba(0,0,0,.6));opacity:.9;transition:opacity .6s ease;">
-      <span style="font:600 14px/1.2 Montserrat,system-ui,Arial;color:#fff;letter-spacing:.5px;">Cargando video…</span>
-    </div>
-    <video id="secondVideo" autoplay muted playsinline webkit-playsinline loop preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;background:#000">
+  <!-- video2 -->
+  <section id="portafolio2" class="portfolio-fullscreen">
+    <div class="videoOverlay"><span>Cargando video…</span></div>
+    <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
       <source src="/assets/video2.mp4?v=1" type="video/mp4">
-      Tu navegador no soporta video HTML5.
     </video>
   </section>
 
-  <!-- 3 columnas verticales con videos en formato vertical -->
-  <!-- Fullscreen 3 con video local video3 -->
-  <section id="portafolio3" class="portfolio-fullscreen">
-    <div class="videoOverlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;background:linear-gradient(180deg, rgba(11,29,58,.5), rgba(0,0,0,.6));opacity:.9;transition:opacity .6s ease;">
-      <span style="font:600 14px/1.2 Montserrat,system-ui,Arial;color:#fff;letter-spacing:.5px;">Cargando video…</span>
+  <!-- 3 videos verticales (1080x1920) -->
+  <section id="verticales" class="portfolio-vertical">
+    <div class="video">
+      <div class="videoOverlay"><span>Cargando…</span></div>
+      <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
+        <source src="/assets/vertical1.mp4?v=1" type="video/mp4">
+      </video>
     </div>
-    <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto" style="width:100%;height:100%;object-fit:cover;display:block;background:#000">
+    <div class="video">
+      <div class="videoOverlay"><span>Cargando…</span></div>
+      <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
+        <source src="/assets/vertical2.mp4?v=1" type="video/mp4">
+      </video>
+    </div>
+    <div class="video">
+      <div class="videoOverlay"><span>Cargando…</span></div>
+      <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
+        <source src="/assets/vertical3.mp4?v=1" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+  <!-- video3 -->
+  <section id="portafolio3" class="portfolio-fullscreen">
+    <div class="videoOverlay"><span>Cargando video…</span></div>
+    <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
       <source src="/assets/video3.mp4?v=1" type="video/mp4">
-      Tu navegador no soporta video HTML5.
     </video>
-  </section>
-
-  <section id="sobre-mi">
-    <h2>Sobre mí</h2>
-    <p>Soy un realizador audiovisual apasionado por contar historias a través de la imagen y el sonido. Me especializo en la creación de contenido para publicidad, videoclips y proyectos narrativos.</p>
-  </section>
-
-  <section id="contacto" class="contacto">
-    <h2>Contacto</h2>
-    <form action="#" method="post">
-      <input type="text" name="nombre" placeholder="Tu nombre" required />
-      <input type="email" name="correo" placeholder="Tu correo" required />
-      <textarea rows="5" name="mensaje" placeholder="Escribe tu mensaje..." required></textarea>
-      <button type="submit">Enviar</button>
-    </form>
   </section>
 
   <footer>
     <p>&copy; 2025 Mi Nombre | Realizador Audiovisual</p>
   </footer>
 
-  <script defer>
-    (function() {
-      try {
-        const sections = document.querySelectorAll('section');
-        if ('IntersectionObserver' in window) {
-          const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-              entry.target.classList.toggle('visible', entry.isIntersecting);
-            });
-          }, { threshold: 0.2 });
-          sections.forEach(s => observer.observe(s));
-        } else {
-          sections.forEach(s => s.classList.add('visible'));
-        }
-      } catch (e) {
-        console.warn('Animaciones deshabilitadas por un error no crítico:', e);
-        document.querySelectorAll('section').forEach(s => s.classList.add('visible'));
-      }
-    })();
-  </script>
   <script>
-    // Debug mínimo para detectar rutas/errores de reproducción
+    // Script único para manejar autoplay seguro y overlays en todos los videos
     (function(){
-      const v = document.getElementById('heroVideo');
-      if (!v) return;
-      v.addEventListener('error', () => {
-        console.error('Error reproduciendo el video. Verifica la ruta /assets/video1.mp4 y el tamaño del archivo.');
-        const note = document.createElement('div');
-        note.textContent = '⚠️ No se pudo cargar el video (/assets/video1.mp4). Revisa nombre, mayúsculas/minúsculas y que esté en la rama correcta.';
-        note.style.cssText = 'position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.6);padding:10px 12px;border-radius:8px;font:14px/1.4 monospace;z-index:5';
-        document.getElementById('portafolio1').appendChild(note);
-      });
-      v.addEventListener('canplay', () => {
-        console.log('✅ Video listo para reproducirse');
-      });
-
-      // Si añadiste ?debug=1 a la URL, mostramos controles
-      const params = new URLSearchParams(location.search);
-      if (params.get('debug') === '1') {
-        v.setAttribute('controls', 'controls');
-      }
-
-      // Comprobación rápida de existencia del archivo en el servidor
-      fetch('/assets/video1.mp4', { method: 'HEAD' }).then(r => {
-        console.log('HEAD /assets/video1.mp4 →', r.status, r.statusText);
-      }).catch(e => console.warn('HEAD fallo', e));
-    })();
-  </script>
-  <script>
-    (function(){
-      const v = document.getElementById('heroVideo');
-      const overlay = document.getElementById('videoOverlay');
-      if (!v) return;
-
-      // Asegurar flags para autoplay en todos los navegadores
-      v.muted = true; v.defaultMuted = true; v.playsInline = true; v.setAttribute('playsinline',''); v.setAttribute('webkit-playsinline','');
-
-      const hideOverlay = () => { if (overlay) overlay.style.opacity = '0'; setTimeout(()=>{ if (overlay) overlay.style.display='none'; }, 700); };
-      const showOverlayMsg = (msg) => { if (!overlay) return; overlay.style.display='flex'; overlay.style.opacity='.95'; overlay.querySelector('span').textContent = msg || 'Cargando video…'; };
-
-      // Intentar reproducir apenas pueda
-      const tryPlay = () => {
-        v.play().then(hideOverlay).catch(err => {
-          // Si falla autoplay, pedimos interacción
-          showOverlayMsg('Toca o haz click para reproducir');
-        });
-      };
-
-      v.addEventListener('loadeddata', () => { /* primer frame disponible */ });
-      v.addEventListener('canplay', tryPlay);
-      v.addEventListener('play', hideOverlay);
-      v.addEventListener('waiting', () => showOverlayMsg('Cargando…'));
-      v.addEventListener('stalled', () => showOverlayMsg('Reconectando…'));
-      v.addEventListener('error', () => showOverlayMsg('No se pudo cargar el video'));
-
-      // Fallback por interacción del usuario
-      ['click','touchstart','keydown','scroll'].forEach(ev => {
-        window.addEventListener(ev, function one(){
-          tryPlay(); window.removeEventListener(ev, one, { once:true });
-        }, { once:true, passive:true });
-      });
-
-      // Depuración opcional
-      const params = new URLSearchParams(location.search);
-      if (params.get('debug') === '1') v.setAttribute('controls','controls');
-
-      // HEAD para confirmar disponibilidad
-      fetch('/assets/video1.mp4', { method:'HEAD' }).then(r => console.log('HEAD /assets/video1.mp4 →', r.status)).catch(console.warn);
-    })();
-  </script>
-  <script>
-    // Autoplay seguro para todos los .autoVideo (incluye verticales y fullscreen)
-    (function(){
-      // Inyectar overlay si falta (para columnas verticales)
-      document.querySelectorAll('.portfolio-vertical .video').forEach(col => {
-        if (!col.querySelector('.videoOverlay')) {
-          const ov = document.createElement('div');
-          ov.className = 'videoOverlay';
-          ov.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;background:linear-gradient(180deg, rgba(11,29,58,.35), rgba(0,0,0,.5));opacity:.9;transition:opacity .6s ease;';
-          const span = document.createElement('span');
-          span.textContent = 'Cargando…';
-          span.style.cssText = 'font:600 14px/1.2 Montserrat,system-ui,Arial;color:#fff;letter-spacing:.5px;';
-          ov.appendChild(span);
-          col.prepend(ov);
-        }
-      });
-
       const vids = document.querySelectorAll('.autoVideo');
       vids.forEach(v => {
+        // flags para autoplay seguro
         v.muted = true; v.defaultMuted = true; v.playsInline = true; v.setAttribute('playsinline',''); v.setAttribute('webkit-playsinline','');
         const overlay = v.parentElement.querySelector('.videoOverlay');
         const hide = () => { if (overlay){ overlay.style.opacity='0'; setTimeout(()=>overlay.style.display='none',700);} };
-        const show = (msg) => { if (!overlay) return; overlay.style.display='flex'; overlay.style.opacity='.95'; overlay.querySelector('span').textContent = msg || 'Cargando video…'; };
+        const show = (msg) => { if (!overlay) return; overlay.style.display='flex'; overlay.style.opacity='.95'; overlay.querySelector('span').textContent = msg || 'Cargando…'; };
         const tryPlay = () => v.play().then(hide).catch(()=>show('Toca para reproducir'));
         v.addEventListener('canplay', tryPlay);
         v.addEventListener('play', hide);
@@ -275,10 +138,10 @@
         ['click','touchstart','keydown','scroll'].forEach(ev => window.addEventListener(ev, function one(){ tryPlay(); window.removeEventListener(ev, one, {once:true}); }, {once:true, passive:true}));
       });
 
+      // Depuración: controles con ?debug=1
       const params = new URLSearchParams(location.search);
       if (params.get('debug') === '1') vids.forEach(v => v.setAttribute('controls','controls'));
     })();
   </script>
 </body>
 </html>
-
