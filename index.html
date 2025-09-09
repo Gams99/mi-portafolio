@@ -34,7 +34,6 @@
     nav a { color: #f5f5f5; text-decoration: none; margin: 0 1rem; font-weight: 500; transition: color 0.3s; }
     nav a:hover { color: #ff004f; }
 
-    /* Secciones fullscreen con gradiente de fondo */
     section {
       position: relative;
       width: 100vw;
@@ -51,7 +50,6 @@
     }
     section.visible { opacity: 1; transform: translateY(0) scale(1); }
 
-    /* Hero */
     .hero { background: url("https://picsum.photos/1600/900?grayscale") center/cover no-repeat; }
     .hero::after { content:''; position:absolute; inset:0; background: rgba(11,29,58,0.5); z-index:1; }
     .hero h1 { position:relative; z-index:2; font-size: 3.5rem; padding: 1rem 3rem; border-radius: 15px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); opacity:0; transform: translateY(20px); transition: opacity 1.5s ease, transform 1.5s ease; }
@@ -59,11 +57,9 @@
 
     h2 { margin-bottom: 2rem; color: #ff004f; font-weight: 700; }
 
-    /* Fullscreen iframes */
     .portfolio-fullscreen { width: 100vw; height: 100vh; }
-    .portfolio-fullscreen iframe { width: 100%; height: 100%; border: 0; display:block; }
+    .portfolio-fullscreen iframe, .portfolio-fullscreen video { width: 100%; height: 100%; border: 0; display:block; object-fit: cover; }
 
-    /* 3 columnas verticales */
     .portfolio-vertical { display: flex; flex-direction: row; width: 100vw; height: 100vh; }
     .portfolio-vertical .video { flex:1; height:100%; position:relative; overflow:hidden; filter: brightness(0.35); transition: filter 0.6s ease; }
     .portfolio-vertical .video:hover { filter: brightness(1); }
@@ -71,13 +67,11 @@
     .portfolio-vertical .video:hover::after { background: rgba(11,29,58,0); }
     .portfolio-vertical .video iframe { width:100%; height:100%; border:0; display:block; position:relative; z-index:2; }
 
-    /* Responsive: apilar columnas en móvil */
     @media (max-width: 1024px) {
       .portfolio-vertical { flex-direction: column; }
       .portfolio-vertical .video { height: 33.33vh; }
     }
 
-    /* Contacto */
     .contacto form { display:flex; flex-direction:column; gap:1rem; width:100%; max-width:500px; position:relative; z-index:2; }
     .contacto input, .contacto textarea { padding:1rem; border:none; border-radius:10px; font-size:1rem; background: rgba(255,255,255,0.05); color:#fff; }
     .contacto input:focus, .contacto textarea:focus { outline:none; background: rgba(255,255,255,0.1); }
@@ -104,16 +98,15 @@
     <h1>Realizador Audiovisual</h1>
   </section>
 
-  <!-- Fullscreen 1 -->
-  <section class="portfolio-fullscreen">
-  <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;">
-    <source src="https://drive.google.com/uc?export=download&id=1ZmRJI3WSdsJeYaO0GxfJtaS6Qb5eamOH" type="video/mp4">
-    Tu navegador no soporta video HTML5.
-  </video>
-</section>
+  <!-- Fullscreen 1 con video de Google Drive -->
+  <section id="portafolio1" class="portfolio-fullscreen">
+    <video autoplay muted loop playsinline>
+      <source src="https://drive.google.com/uc?export=download&id=1ZmRJI3WSdsJeYaO0GxfJtaS6Qb5eamOH" type="video/mp4">
+      Tu navegador no soporta video HTML5.
+    </video>
+  </section>
 
-
-  <!-- Fullscreen 2 -->
+  <!-- Fullscreen 2 de ejemplo con YouTube -->
   <section class="portfolio-fullscreen">
     <iframe loading="lazy"
       src="https://www.youtube-nocookie.com/embed/UltxQz9LN84?rel=0&modestbranding=1&controls=1"
@@ -147,7 +140,6 @@
   </footer>
 
   <script defer>
-    // Hacemos el JS a prueba de fallos por si algún navegador no soporta IntersectionObserver
     (function() {
       try {
         const sections = document.querySelectorAll('section');
@@ -159,17 +151,13 @@
           }, { threshold: 0.2 });
           sections.forEach(s => observer.observe(s));
         } else {
-          // Fallback: mostrar todo
           sections.forEach(s => s.classList.add('visible'));
         }
       } catch (e) {
-        // Si algo falla en el JS, no bloqueamos el render
         console.warn('Animaciones deshabilitadas por un error no crítico:', e);
         document.querySelectorAll('section').forEach(s => s.classList.add('visible'));
       }
     })();
   </script>
 </body>
-</html>
-
 </html>
