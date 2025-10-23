@@ -135,7 +135,7 @@
 
   <!-- REEL -->
   <section id="reel" class="reel-section">
-    <video controls poster="/assets/reel-poster.jpg">
+    <video id="reelVideo" controls playsinline preload="metadata" poster="/assets/reel-poster.jpg">
       <source src="/assets/reel.mp4" type="video/mp4">
     </video>
     <h2>Reel Audiovisual</h2>
@@ -143,5 +143,44 @@
   </section>
 
   <footer style="text-align:center;padding:2rem;background:#000">© 2025 Gabriel Muñoz | Realizador Audiovisual</footer>
+  <script>
+    // Genera automáticamente un poster desde el primer frame del reel
+    (function(){
+      const vid = document.getElementById('reelVideo');
+      if(!vid) return;
+
+      // Si ya hay poster externo, lo usaremos como fallback. Intentamos generar uno propio
+      const makePoster = () => {
+        try{
+          const w = vid.videoWidth || 1280;
+          const h = vid.videoHeight || 720;
+          if(!w || !h) return; // aún no hay datos
+          const c = document.createElement('canvas');
+          c.width = w; c.height = h;
+          const ctx = c.getContext('2d');
+          ctx.drawImage(vid, 0, 0, w, h);
+          const dataURL = c.toDataURL('image/jpeg', 0.85);
+          // Asignamos el poster generado y recargamos para forzar a mostrarlo
+          vid.setAttribute('poster', dataURL);
+          // Pausamos y aseguramos el tiempo 0 para que se muestre el poster
+          try{ vid.pause(); }catch(e){}
+          try{ vid.currentTime = 0; }catch(e){}
+        }catch(e){/* silencioso */}
+      };
+
+      // Estrategia: al tener metadata, buscamos el frame 0.01s para garantizar un cuadro decodificado
+      if (vid.readyState >= 1) { // HAVE_METADATA
+        try{ vid.currentTime = 0.01; }catch(e){}
+      } else {
+        vid.addEventListener('loadedmetadata', ()=>{
+          try{ vid.currentTime = 0.01; }catch(e){}
+        }, {once:true});
+      }
+
+      vid.addEventListener('seeked', ()=>{
+        makePoster();
+      }, {once:true});
+    })();
+  </script>
 </body>
 </html>
