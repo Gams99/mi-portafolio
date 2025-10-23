@@ -1,8 +1,0 @@
-{
-  "name": "mi-portafolio",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "nodemailer": "^6.9.8"
-  }
-}
