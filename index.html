@@ -56,7 +56,9 @@
     .media-split{position:relative;width:100vw;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4vw;background:linear-gradient(180deg,#0b1d3a 0%, #061127 100%);padding:8vh 6vw}
     @supports(min-height:100svh){.media-split{min-height:100svh}}
     .media-split .media{position:relative;display:flex;align-items:center;justify-content:center}
-    .media-split .media video{width:auto;height:auto;max-width:95%;max-height:85vh;object-fit:contain;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.5);background:#000}
+    .media-split .media video{width:100%;height:auto;max-height:85vh;object-fit:contain;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.5);background:#000}
+    .media-split .video-wrap{position:relative;width:100%;max-width:52vw}
+    @media(max-width:1024px){.media-split .video-wrap{max-width:100%}}
     .media-split .copy{display:flex;align-items:center;justify-content:center}
     .media-split .copy .inner{max-width:620px;width:100%}
     .media-split .copy h3{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:.5rem}
@@ -115,10 +117,12 @@
 
   <section id="portafolio2" class="media-split left">
     <div class="media">
-      <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
-        <source src="/assets/video2.mp4?v=1" type="video/mp4">
-      </video>
-      <div class="video-caption bl">Montaje comercial - Top Chef con Betano</div>
+      <div class="video-wrap">
+        <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
+          <source src="/assets/video2.mp4?v=1" type="video/mp4">
+        </video>
+        <div class="video-caption bl">Montaje comercial - Top Chef con Betano</div>
+      </div>
     </div>
     <div class="copy">
       <div class="inner">
@@ -142,10 +146,12 @@
       </div>
     </div>
     <div class="media">
-      <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
-        <source src="/assets/video3.mp4?v=1" type="video/mp4">
-      </video>
-      <div class="video-caption bl">Realizador "Junta Chile Minicoopers"</div>
+      <div class="video-wrap">
+        <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
+          <source src="/assets/video3.mp4?v=1" type="video/mp4">
+        </video>
+        <div class="video-caption br">Realizador "Junta Chile Minicoopers"</div>
+      </div>
     </div>
   </section>
 
