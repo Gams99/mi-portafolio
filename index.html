@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portafolio - Gabriel Muñoz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0b1d3a;
+      color: #f5f5f5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    header { background: rgba(0,0,0,0.85); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
+    nav { display: flex; justify-content: space-between; align-items: center; }
+    nav a { color: #f5f5f5; text-decoration: none; margin: 0 1rem; font-weight: 500; transition: color 0.3s; }
+    nav a:hover { color: #ff004f; }
+
+    .hero-video { position: relative; width: 100vw; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background:#000; }
+    .hero-video video { position:absolute; inset:0; width:100%; height:100%; object-fit: cover; z-index:0; }
+    .hero-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(11,29,58,.35), rgba(0,0,0,.65)); z-index:1; }
+    .hero-content { position: relative; z-index: 2; text-align: center; }
+    .hero-content h1 { font-size: clamp(2rem, 6vw, 4rem); margin-bottom:.5rem; text-shadow:0 6px 30px rgba(0,0,0,.6); }
+    .hero-content h2 { font-size: clamp(1.2rem, 3vw, 2rem); font-weight:300; text-shadow:0 4px 20px rgba(0,0,0,.6); }
+
+    section.video-block { position: relative; width: 100vw; min-height: 100vh; display:flex; justify-content:center; align-items:center; overflow:hidden; background:#000; }
+    section.video-block video { width: 100%; height: 100%; object-fit: cover; display:block; background:#000; }
+
+    /* Video2 a la izquierda */
+    #portafolio2 { display: flex; justify-content: flex-start; align-items: center; padding-left: 5vw; }
+    #portafolio2 video { width: 60%; height: auto; max-height: 80vh; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+
+    /* Video3 a la derecha */
+    #portafolio3 { display: flex; justify-content: flex-end; align-items: center; padding-right: 5vw; }
+    #portafolio3 video { width: 60%; height: auto; max-height: 80vh; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+
+    section.vertical-grid { position: relative; width: 100vw; min-height: 100vh; display:flex; overflow:hidden; background:#000; }
+    .vertical-col { flex:1; position:relative; height: 100%; overflow:hidden; display:flex; justify-content:center; align-items:center; }
+    .vertical-col video { width:100%; height:100%; object-fit: cover; display:block; background:#000; filter:brightness(0.9); }
+
+    .video-caption { position:absolute; z-index:4; pointer-events:none; background:rgba(0,0,0,.45); padding:.35rem .6rem; border-radius:10px; font-weight:600; letter-spacing:.3px; line-height:1; white-space:nowrap; font-size:clamp(.75rem,1.6vw,.95rem); }
+    .video-caption.bl { left:16px; bottom:16px; }
+    .video-caption.br { right:16px; bottom:16px; }
+
+    footer { text-align:center; padding:2rem; background:#000; letter-spacing:1px; }
+
+    @media (max-width: 1024px) {
+      #portafolio2, #portafolio3 { flex-direction: column; align-items: center; padding: 0; }
+      #portafolio2 video, #portafolio3 video { width: 90%; max-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <h3>Mi Portafolio</h3>
+      <div>
+        <a href="#inicio">Inicio</a>
+        <a href="#portafolio2">Portafolio</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </nav>
+  </header>
+
+  <section id="inicio" class="hero-video">
+    <video class="autoVideo" autoplay muted playsinline loop preload="auto" poster="/assets/video1-poster.jpg">
+      <source src="/assets/video1.mp4?v=2" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Gabriel Muñoz</h1>
+      <h2>Realizador Audiovisual</h2>
+    </div>
+  </section>
+
+  <section id="portafolio2" class="video-block">
+    <video class="autoVideo" autoplay muted playsinline loop preload="auto">
+      <source src="/assets/video2.mp4?v=1" type="video/mp4">
+    </video>
+    <div class="video-caption bl">Montaje comercial - Top Chef con Betano</div>
+  </section>
+
+  <section id="verticales" class="vertical-grid">
+    <div class="vertical-col"><video class="autoVideo" autoplay muted playsinline loop preload="metadata"><source src="/assets/vertical1.mp4?v=1" type="video/mp4"></video></div>
+    <div class="vertical-col"><video class="autoVideo" autoplay muted playsinline loop preload="metadata"><source src="/assets/vertical2.mp4?v=1" type="video/mp4"></video></div>
+    <div class="vertical-col"><video class="autoVideo" autoplay muted playsinline loop preload="metadata"><source src="/assets/vertical3.mp4?v=1" type="video/mp4"></video></div>
+  </section>
+
+  <section id="portafolio3" class="video-block">
+    <video class="autoVideo" autoplay muted playsinline loop preload="auto">
+      <source src="/assets/video3.mp4?v=1" type="video/mp4">
+    </video>
+    <div class="video-caption bl">Realizador "Junta Chile Minicoopers"</div>
+  </section>
+
+  <section id="reel" class="split-section">
+    <div class="split-text">
+      <div class="inner">
+        <h2>Reel Audiovisual</h2>
+        <p>Un montaje breve con lo mejor de mi trabajo reciente: dirección, cámara, color y montaje. En esta sección podrás reproducir el video con sonido para apreciar el diseño sonoro y la musicalización.</p>
+      </div>
+    </div>
+    <div class="split-video">
+      <video controls playsinline preload="metadata" poster="/assets/reel-poster.jpg">
+        <source src="/assets/reel.mp4?v=1" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Gabriel Muñoz | Realizador Audiovisual</p>
+  </footer>
+</body>
+</html>
