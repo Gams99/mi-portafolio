@@ -142,6 +142,38 @@
     <p>Un montaje breve con lo mejor de mi trabajo reciente: dirección, cámara, color y montaje. Reproduce con sonido para apreciar el diseño sonoro y la musicalización.</p>
   </section>
 
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const video = document.getElementById("reelVideo");
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  // Espera que se carguen los metadatos del video
+  video.addEventListener("loadeddata", () => {
+    // Define tamaño del lienzo
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    // Dibuja el primer frame (posición 0)
+    video.currentTime = 0.01; // mover ligeramente para evitar frame negro inicial
+    video.pause();
+
+    video.addEventListener("seeked", function captureFrame() {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const dataURL = canvas.toDataURL("image/jpeg");
+
+      // Asigna el primer frame como poster temporal
+      video.setAttribute("poster", dataURL);
+
+      // Limpia el evento y asegura que no se reproduzca
+      video.removeEventListener("seeked", captureFrame);
+      video.pause();
+    });
+  });
+});
+</script>
+  
   <footer style="text-align:center;padding:2rem;background:#000">© 2025 Gabriel Muñoz | Realizador Audiovisual</footer>
 </body>
 </html>
+
