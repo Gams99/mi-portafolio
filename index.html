@@ -4,183 +4,198 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portafolio - Gabriel Muñoz</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Montserrat',sans-serif;background:#0b1d3a;color:#f5f5f5;overflow-x:hidden;scroll-behavior:smooth}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* ====== SECCIONES GENERALES ====== */
-    header{background:rgba(0,0,0,0.85);padding:1rem 2rem;position:sticky;top:0;z-index:1000;backdrop-filter:blur(10px)}
-    nav{display:flex;justify-content:space-between;align-items:center}
-    nav a{color:#f5f5f5;text-decoration:none;margin:0 1rem;font-weight:500;transition:.3s}
-    nav a:hover{color:#ff004f}
+    html, body { height: 100%; scroll-behavior: smooth; }
 
-    section{position:relative;width:100vw;min-height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;background:linear-gradient(180deg,#0b1d3a 0%,#061127 100%)}
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0b1d3a;
+      color: #f5f5f5;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-    /* ====== HERO ====== */
-    .hero-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-    .hero-content{z-index:2;text-align:center}
-    .hero-content h1{font-size:clamp(2rem,6vw,4rem)}
-    .hero-content h2{font-size:clamp(1.2rem,3vw,2rem);font-weight:300}
+    header { background: rgba(0,0,0,0.85); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
+    nav { display: flex; justify-content: space-between; align-items: center; }
+    nav a { color: #f5f5f5; text-decoration: none; margin: 0 1rem; font-weight: 500; transition: color 0.3s; }
+    nav a:hover { color: #ff004f; }
 
-    /* ====== MEDIA SPLIT (Video 2 y 3) ====== */
-    .media-split{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4vw;padding:8vh 6vw;background:linear-gradient(180deg,#0b1d3a 0%,#061127 100%)}
-    .media-split .media{display:flex;justify-content:center;align-items:center}
-    .media-split .video-wrap{position:relative;width:100%;max-width:58vw}
-    .media-split .media video{width:100%;height:auto;max-height:88vh;object-fit:contain;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
-    .video-caption{position:absolute;z-index:5;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:.3rem .6rem;border-radius:8px;font-size:.9rem;font-weight:600;opacity:.9}
-    .video-caption.bl{left:12px;bottom:12px}
-    .video-caption.br{right:12px;bottom:12px}
+    /* HERO */
+    .hero-video { position: relative; width: 100vw; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background:#000; }
+    .hero-video video { position:absolute; inset:0; width:100%; height:100%; object-fit: cover; z-index:0; }
+    .hero-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(11,29,58,.35), rgba(0,0,0,.65)); z-index:1; }
+    .hero-content { position: relative; z-index: 2; text-align: center; }
+    .hero-content h1 { font-size: clamp(2rem, 6vw, 4rem); margin-bottom:.5rem; text-shadow:0 6px 30px rgba(0,0,0,.6); }
+    .hero-content h2 { font-size: clamp(1.2rem, 3vw, 2rem); font-weight:300; text-shadow:0 4px 20px rgba(0,0,0,.6); }
 
-    .copy{display:flex;align-items:center;justify-content:center}
-    .copy .inner{max-width:640px}
-    .copy h3{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:.6rem}
-    .copy p{font-size:clamp(1rem,1.4vw,1.125rem);opacity:.9}
+    /* VIDEO BLOQUES CON TEXTO OPUESTO */
+    .media-split {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4vw;
+      padding: 10vh 6vw;
+      background: linear-gradient(180deg, #0b1d3a 0%, #061127 100%);
+    }
+    .media-split .video-wrap {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      max-width: 60vw;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 14px 48px rgba(0, 0, 0, 0.55);
+      background: #000;
+    }
+    .media-split .media video {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 88vh;
+      object-fit: contain;
+    }
+    .video-caption {
+      position: absolute;
+      z-index: 5;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(3px);
+      padding: .4rem .7rem;
+      border-radius: 10px;
+      font-size: clamp(.75rem, 1.6vw, .95rem);
+      font-weight: 600;
+      letter-spacing: .3px;
+    }
 
-    /* ====== REEL ====== */
-    .reel-section{background:linear-gradient(180deg,#0b1d3a 0%,#061127 100%);padding:10vh 4vw;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
-    .reel-section video{width:80%;max-width:1000px;height:auto;object-fit:contain;border:1px solid rgba(255,255,255,.2);box-shadow:0 14px 50px rgba(0,0,0,.6);border-radius:14px;margin-bottom:2rem}
-    .reel-section h2{font-size:clamp(1.8rem,4vw,3rem);margin-bottom:1rem}
-    .reel-section p{max-width:900px;margin:0 auto;font-size:clamp(1rem,1.5vw,1.1rem);opacity:.9}
+    .media-text { max-width: 600px; }
+    .media-text h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: .5rem; }
+    .media-text p { font-size: clamp(1rem, 1.6vw, 1.125rem); opacity: .9; }
 
-    /* ====== RESPONSIVE ====== */
-    @media(max-width:1024px){
-      .media-split{grid-template-columns:1fr;padding:8vh 4vw}
-      .media-split .video-wrap{max-width:100%}
-      .media-split .media video{max-height:70vh}
-      .copy{order:1;text-align:center}
+    /* REELS VERTICALES */
+    .vertical-grid {
+      display: flex;
+      min-height: 100vh;
+      background: linear-gradient(180deg,#061127,#0b1d3a);
+    }
+    .vertical-col { flex: 1; position: relative; overflow: hidden; }
+    .vertical-col video { width: 100%; height: 100%; object-fit: cover; }
+    .vertical-col .video-caption { bottom: 10px; right: 10px; }
+
+    /* REEL FINAL */
+    .reel-section {
+      background: linear-gradient(180deg, #061127, #0b1d3a);
+      padding: 8vh 4vw;
+      text-align: center;
+    }
+    .reel-section video {
+      width: min(80vw, 900px);
+      border-radius: 16px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+      margin-bottom: 2rem;
+    }
+
+    footer { text-align:center; padding:2rem; background:#000; letter-spacing:1px; }
+
+    @media (max-width: 1024px) {
+      .media-split { grid-template-columns: 1fr; text-align: center; }
+      .media-split .video-wrap { max-width: 100%; }
+      .media-text { margin-top: 2rem; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <h3>Mi Portafolio</h3>
-      <div>
-        <a href="#inicio">Inicio</a>
-        <a href="#portafolio2">Portafolio</a>
-        <a href="#reel">Reel</a>
-      </div>
-    </nav>
-  </header>
 
-  <!-- HERO -->
-  <section class="hero-video" id="inicio">
+<header>
+  <nav>
+    <h3>Mi Portafolio</h3>
+    <div>
+      <a href="#inicio">Inicio</a>
+      <a href="#portafolio2">Portafolio</a>
+      <a href="#reel">Reel</a>
+    </div>
+  </nav>
+</header>
+
+<section id="inicio" class="hero-video">
+  <video autoplay muted loop playsinline poster="/assets/video1-poster.jpg">
+    <source src="/assets/video1.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Gabriel Muñoz</h1>
+    <h2>Realizador Audiovisual</h2>
+  </div>
+</section>
+
+<!-- VIDEO 2 -->
+<section class="media-split">
+  <div class="video-wrap">
     <video autoplay muted loop playsinline>
-      <source src="/assets/video1.mp4" type="video/mp4">
+      <source src="/assets/video2.mp4" type="video/mp4">
     </video>
-    <div class="hero-content">
-      <h1>Gabriel Muñoz</h1>
-      <h2>Realizador Audiovisual</h2>
-    </div>
-  </section>
+    <div class="video-caption">Montaje comercial - Top Chef con Betano</div>
+  </div>
+  <div class="media-text">
+    <h2>Top Chef x Betano</h2>
+    <p>Breve descripción del aporte creativo y técnico en la pieza: montaje, ritmo, narrativa y color.</p>
+  </div>
+</section>
 
-  <!-- VIDEO 2 -->
-  <section id="portafolio2" class="media-split left">
-    <div class="media">
-      <div class="video-wrap">
-        <video autoplay muted loop playsinline>
-          <source src="/assets/video2.mp4" type="video/mp4">
-        </video>
-        <div class="video-caption bl">Montaje comercial - Top Chef con Betano</div>
-      </div>
-    </div>
-    <div class="copy">
-      <div class="inner">
-        <h3>Top Chef x Betano</h3>
-        <p>Breve descripción del aporte creativo y técnico en la pieza: montaje, ritmos, narrativa y tratamiento de color.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- REELS VERTICALES -->
-  <section id="verticales" style="display:flex;justify-content:center;align-items:center;gap:1vw;min-height:100vh;background:linear-gradient(180deg,#0b1d3a 0%,#061127 100%);overflow:hidden;">
-    <div style="flex:1;position:relative;display:flex;justify-content:center;align-items:center;">
-      <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.5);">
-        <source src="/assets/vertical1.mp4" type="video/mp4">
-      </video>
-      <div class="video-caption bl">Editor Real Time - Zúmbale Primo</div>
-    </div>
-    <div style="flex:1;position:relative;display:flex;justify-content:center;align-items:center;">
-      <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.5);">
-        <source src="/assets/vertical2.mp4" type="video/mp4">
-      </video>
-      <div class="video-caption bl">Realizador Reels - Sodimac Chile</div>
-    </div>
-    <div style="flex:1;position:relative;display:flex;justify-content:center;align-items:center;">
-      <video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.5);">
-        <source src="/assets/vertical3.mp4" type="video/mp4">
-      </video>
-      <div class="video-caption bl">Editor Real Time - La Fiesta del Memo</div>
-    </div>
-  </section>
-
-  <!-- VIDEO 3 -->
-  <section id="portafolio3" class="media-split right">
-    <div class="copy">
-      <div class="inner">
-        <h3>Junta Chile Mini Coopers</h3>
-        <p>Breve relato del rol (realizador) y foco audiovisual: cobertura dinámica, dirección de cámara y cohesión narrativa.</p>
-      </div>
-    </div>
-    <div class="media">
-      <div class="video-wrap">
-        <video autoplay muted loop playsinline>
-          <source src="/assets/video3.mp4" type="video/mp4">
-        </video>
-        <div class="video-caption br">Realizador "Junta Chile Minicoopers"</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- REEL -->
-  <section id="reel" class="reel-section">
-    <video id="reelVideo" controls playsinline preload="metadata" poster="/assets/reel-poster.jpg">
-      <source src="/assets/reel.mp4" type="video/mp4">
+<!-- VIDEO 3 -->
+<section class="media-split">
+  <div class="media-text">
+    <h2>Junta Chile Mini Coopers</h2>
+    <p>Breve relato del rol (realizador) y foco audiovisual: cobertura dinámica, dirección de cámara y cohesión narrativa.</p>
+  </div>
+  <div class="video-wrap">
+    <video autoplay muted loop playsinline>
+      <source src="/assets/video3.mp4" type="video/mp4">
     </video>
-    <h2>Reel Audiovisual</h2>
-    <p>Un montaje breve con lo mejor de mi trabajo reciente: dirección, cámara, color y montaje. Reproduce con sonido para apreciar el diseño sonoro y la musicalización.</p>
-  </section>
+    <div class="video-caption">Realizador "Junta Chile Minicoopers"</div>
+  </div>
+</section>
 
-  <footer style="text-align:center;padding:2rem;background:#000">© 2025 Gabriel Muñoz | Realizador Audiovisual</footer>
-  <script>
-    // Genera automáticamente un poster desde el primer frame del reel
-    (function(){
-      const vid = document.getElementById('reelVideo');
-      if(!vid) return;
+<!-- REELS VERTICALES -->
+<section class="vertical-grid">
+  <div class="vertical-col">
+    <video autoplay muted loop playsinline>
+      <source src="/assets/vertical1.mp4" type="video/mp4">
+    </video>
+    <div class="video-caption">Editor Realtime - Zúmbale Primo</div>
+  </div>
+  <div class="vertical-col">
+    <video autoplay muted loop playsinline>
+      <source src="/assets/vertical2.mp4" type="video/mp4">
+    </video>
+    <div class="video-caption">Realizador Reels Sodimac Chile</div>
+  </div>
+  <div class="vertical-col">
+    <video autoplay muted loop playsinline>
+      <source src="/assets/vertical3.mp4" type="video/mp4">
+    </video>
+    <div class="video-caption">Editor Realtime - La Fiesta del Memo</div>
+  </div>
+</section>
 
-      // Si ya hay poster externo, lo usaremos como fallback. Intentamos generar uno propio
-      const makePoster = () => {
-        try{
-          const w = vid.videoWidth || 1280;
-          const h = vid.videoHeight || 720;
-          if(!w || !h) return; // aún no hay datos
-          const c = document.createElement('canvas');
-          c.width = w; c.height = h;
-          const ctx = c.getContext('2d');
-          ctx.drawImage(vid, 0, 0, w, h);
-          const dataURL = c.toDataURL('image/jpeg', 0.85);
-          // Asignamos el poster generado y recargamos para forzar a mostrarlo
-          vid.setAttribute('poster', dataURL);
-          // Pausamos y aseguramos el tiempo 0 para que se muestre el poster
-          try{ vid.pause(); }catch(e){}
-          try{ vid.currentTime = 0; }catch(e){}
-        }catch(e){/* silencioso */}
-      };
+<!-- REEL FINAL -->
+<section id="reel" class="reel-section">
+  <video controls poster="/assets/reel-poster.jpg">
+    <source src="/assets/reel.mp4" type="video/mp4">
+  </video>
+  <h2>Reel Audiovisual</h2>
+  <p>Un montaje breve con lo mejor de mi trabajo reciente: dirección, cámara, color y montaje. Reproduce con sonido para apreciar el diseño sonoro y la musicalización.</p>
+</section>
 
-      // Estrategia: al tener metadata, buscamos el frame 0.01s para garantizar un cuadro decodificado
-      if (vid.readyState >= 1) { // HAVE_METADATA
-        try{ vid.currentTime = 0.01; }catch(e){}
-      } else {
-        vid.addEventListener('loadedmetadata', ()=>{
-          try{ vid.currentTime = 0.01; }catch(e){}
-        }, {once:true});
-      }
+<footer>
+  <p>&copy; 2025 Gabriel Muñoz | Realizador Audiovisual</p>
+</footer>
 
-      vid.addEventListener('seeked', ()=>{
-        makePoster();
-      }, {once:true});
-    })();
-  </script>
 </body>
 </html>
