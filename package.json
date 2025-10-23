@@ -2,8 +2,5 @@
   "name": "mi-portafolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Portafolio de Gabriel Muñoz con backend de contacto",
-  "dependencies": {
-    "nodemailer": "^6.9.8"
-  }
+  "dependencies": { "nodemailer": "^6.9.8" }
 }
