@@ -135,45 +135,43 @@
 
   <!-- REEL -->
   <section id="reel" class="reel-section">
-    <video controls poster="/assets/reel-poster.jpg">
+    <video id="reelVideo" controls preload="metadata" playsinline muted>
       <source src="/assets/reel.mp4" type="video/mp4">
     </video>
     <h2>Reel Audiovisual</h2>
     <p>Un montaje breve con lo mejor de mi trabajo reciente: dirección, cámara, color y montaje. Reproduce con sonido para apreciar el diseño sonoro y la musicalización.</p>
   </section>
 
+  <footer style="text-align:center;padding:2rem;background:#000">© 2025 Gabriel Muñoz | Realizador Audiovisual</footer>
+
+  <!-- Script para mostrar automáticamente el primer frame del Reel -->
   <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const video = document.getElementById("reelVideo");
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+  document.addEventListener("DOMContentLoaded", function () {
+    const video = document.getElementById("reelVideo");
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
 
-  // Espera que se carguen los metadatos del video
-  video.addEventListener("loadeddata", () => {
-    // Define tamaño del lienzo
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    video.addEventListener("loadeddata", () => {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
-    // Dibuja el primer frame (posición 0)
-    video.currentTime = 0.01; // mover ligeramente para evitar frame negro inicial
-    video.pause();
-
-    video.addEventListener("seeked", function captureFrame() {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const dataURL = canvas.toDataURL("image/jpeg");
-
-      // Asigna el primer frame como poster temporal
-      video.setAttribute("poster", dataURL);
-
-      // Limpia el evento y asegura que no se reproduzca
-      video.removeEventListener("seeked", captureFrame);
+      // Mover ligeramente para evitar frame negro inicial
+      video.currentTime = 0.01;
       video.pause();
+
+      video.addEventListener("seeked", function captureFrame() {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataURL = canvas.toDataURL("image/jpeg");
+
+        // Usa el primer frame como poster dinámico
+        video.setAttribute("poster", dataURL);
+
+        // Limpia evento y pausa video
+        video.removeEventListener("seeked", captureFrame);
+        video.pause();
+      });
     });
   });
-});
-</script>
-  
-  <footer style="text-align:center;padding:2rem;background:#000">© 2025 Gabriel Muñoz | Realizador Audiovisual</footer>
+  </script>
 </body>
 </html>
-
