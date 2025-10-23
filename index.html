@@ -6,89 +6,49 @@
   <title>Portafolio - Gabriel Muñoz</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: #0b1d3a;
-      color: #f5f5f5;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
-    header { background: rgba(0,0,0,0.85); padding: 1rem 2rem; position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(10px); }
-    nav { display: flex; justify-content: space-between; align-items: center; }
-    nav a { color: #f5f5f5; text-decoration: none; margin: 0 1rem; font-weight: 500; transition: color 0.3s; }
-    nav a:hover { color: #ff004f; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Montserrat',sans-serif;background:#0b1d3a;color:#f5f5f5;overflow-x:hidden;scroll-behavior:smooth}
 
-    .hero-video { position: relative; width: 100vw; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background:#000; }
-    .hero-video video { position:absolute; inset:0; width:100%; height:100%; object-fit: cover; z-index:0; }
-    .hero-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(11,29,58,.35), rgba(0,0,0,.65)); z-index:1; }
-    .hero-content { position: relative; z-index: 2; text-align: center; }
-    .hero-content h1 { font-size: clamp(2rem, 6vw, 4rem); margin-bottom:.5rem; text-shadow:0 6px 30px rgba(0,0,0,.6); }
-    .hero-content h2 { font-size: clamp(1.2rem, 3vw, 2rem); font-weight:300; text-shadow:0 4px 20px rgba(0,0,0,.6); }
+    /* ====== SECCIONES GENERALES ====== */
+    header{background:rgba(0,0,0,0.85);padding:1rem 2rem;position:sticky;top:0;z-index:1000;backdrop-filter:blur(10px)}
+    nav{display:flex;justify-content:space-between;align-items:center}
+    nav a{color:#f5f5f5;text-decoration:none;margin:0 1rem;font-weight:500;transition:.3s}
+    nav a:hover{color:#ff004f}
 
-    section.video-block { position: relative; width: 100vw; min-height: 100vh; display:flex; justify-content:center; align-items:center; overflow:hidden; background:#000; }
-    section.video-block video { width: 100%; height: 100%; object-fit: cover; display:block; background:#000; }
+    section{position:relative;width:100vw;min-height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;background:linear-gradient(180deg,#0b1d3a 0%,#061127 100%)}
 
-    /* Video2 a la izquierda */
-    #portafolio2 { display: flex; justify-content: flex-start; align-items: center; padding-left: 5vw; }
-    #portafolio2 video { width: 60%; height: auto; max-height: 80vh; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+    /* ====== HERO ====== */
+    .hero-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+    .hero-content{z-index:2;text-align:center}
+    .hero-content h1{font-size:clamp(2rem,6vw,4rem)}
+    .hero-content h2{font-size:clamp(1.2rem,3vw,2rem);font-weight:300}
 
-    /* Video3 a la derecha */
-    #portafolio3 { display: flex; justify-content: flex-end; align-items: center; padding-right: 5vw; }
-    #portafolio3 video { width: 60%; height: auto; max-height: 80vh; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
+    /* ====== MEDIA SPLIT (Video 2 y 3) ====== */
+    .media-split{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4vw;padding:8vh 6vw;background:linear-gradient(180deg,#0b1d3a 0%,#061127 100%)}
+    .media-split .media{display:flex;justify-content:center;align-items:center}
+    .media-split .video-wrap{position:relative;width:100%;max-width:58vw}
+    .media-split .media video{width:100%;height:auto;max-height:88vh;object-fit:contain;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+    .video-caption{position:absolute;z-index:5;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);padding:.3rem .6rem;border-radius:8px;font-size:.9rem;font-weight:600;opacity:.9}
+    .video-caption.bl{left:12px;bottom:12px}
+    .video-caption.br{right:12px;bottom:12px}
 
-    section.vertical-grid { position: relative; width: 100vw; min-height: 100vh; display:flex; overflow:hidden; background:#000; }
-    .vertical-col { flex:1; position:relative; height: 100%; overflow:hidden; display:flex; justify-content:center; align-items:center; }
-    .vertical-col video { width:100%; height:100%; object-fit: cover; display:block; background:#000; filter:brightness(0.9); }
+    .copy{display:flex;align-items:center;justify-content:center}
+    .copy .inner{max-width:640px}
+    .copy h3{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:.6rem}
+    .copy p{font-size:clamp(1rem,1.4vw,1.125rem);opacity:.9}
 
-    .video-caption { position:absolute; z-index:4; pointer-events:none; background:rgba(0,0,0,.45); padding:.35rem .6rem; border-radius:10px; font-weight:600; letter-spacing:.3px; line-height:1; white-space:nowrap; font-size:clamp(.75rem,1.6vw,.95rem); }
-    .video-caption.bl { left:16px; bottom:16px; }
-    .video-caption.br { right:16px; bottom:16px; }
+    /* ====== REEL ====== */
+    .reel-section{background:linear-gradient(180deg,#0b1d3a 0%,#061127 100%);padding:10vh 4vw;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .reel-section video{width:80%;max-width:1000px;height:auto;object-fit:contain;border:1px solid rgba(255,255,255,.2);box-shadow:0 14px 50px rgba(0,0,0,.6);border-radius:14px;margin-bottom:2rem}
+    .reel-section h2{font-size:clamp(1.8rem,4vw,3rem);margin-bottom:1rem}
+    .reel-section p{max-width:900px;margin:0 auto;font-size:clamp(1rem,1.5vw,1.1rem);opacity:.9}
 
-    footer { text-align:center; padding:2rem; background:#000; letter-spacing:1px; }
-
-    @media (max-width: 1024px) {
-      #portafolio2, #portafolio3 { flex-direction: column; align-items: center; padding: 0; }
-      #portafolio2 video, #portafolio3 video { width: 90%; max-height: 60vh; }
-    }
-      /* ===== Secciones con video + texto (Video 2 / Video 3) ===== */
-    .media-split{position:relative;width:100vw;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4vw;background:linear-gradient(180deg,#0b1d3a 0%, #061127 100%);padding:8vh 6vw}
-    @supports(min-height:100svh){.media-split{min-height:100svh}}
-    .media-split .media{position:relative;display:flex;align-items:center;justify-content:center}
-    .media-split .media video{width:100%;height:auto;max-height:85vh;object-fit:contain;border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.5);background:#000}
-    .media-split .video-wrap{position:relative;width:100%;max-width:52vw}
-    @media(max-width:1024px){.media-split .video-wrap{max-width:100%}}
-    .media-split .copy{display:flex;align-items:center;justify-content:center}
-    .media-split .copy .inner{max-width:620px;width:100%}
-    .media-split .copy h3{font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:.5rem}
-    .media-split .copy p{font-size:clamp(1rem,1.4vw,1.125rem);opacity:.9}
-    .media-split.right .copy{order:1}
-    .media-split.right .media{order:2}
-    .media-split.left .media{order:1}
-    .media-split.left .copy{order:2}
-
-    /* ===== Reel (mejor diagramado y centrado) ===== */
-    .split-section{position:relative;width:100vw;background:linear-gradient(180deg,#0b1d3a 0%, #061127 100%);padding:8vh 0;overflow:hidden}
-    .split-container{width:min(1200px,92vw);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:24px}
-    @supports(min-height:100svh){.split-container{min-height:100svh}}
-    .split-section::before{display:none}
-    .split-section .split-video video{width:100%;height:auto;max-height:85vh;object-fit:contain;border:1px solid rgba(255,255,255,.15);box-shadow:0 12px 40px rgba(0,0,0,.5);border-radius:14px;background:#000}
-    .split-section .split-text .inner{max-width:900px;width:100%;margin:0 auto;text-align:center;word-break:break-word;hyphens:auto}
-
+    /* ====== RESPONSIVE ====== */
     @media(max-width:1024px){
-      .media-split{grid-template-columns:1fr;padding:10vw 6vw}
-      .media-split .media video{max-width:100%;max-height:65vh}
-      .media-split.right .copy{order:1}
-      .media-split.right .media{order:2}
-      .media-split.left .media{order:2}
-      .media-split.left .copy{order:1}
-
-      .split-container{width:min(1000px,94vw);gap:18px;padding:0}
-      .split-section .split-video video{max-height:65vh}
-    }
-      .split-section .split-video{border-top:1px solid rgba(255,255,255,.12);padding-top:6vw}
-      .split-section .split-video video{max-width:100%;max-height:60vh;box-shadow:0 8px 28px rgba(0,0,0,.4)}
+      .media-split{grid-template-columns:1fr;padding:8vh 4vw}
+      .media-split .video-wrap{max-width:100%}
+      .media-split .media video{max-height:70vh}
+      .copy{order:1;text-align:center}
     }
   </style>
 </head>
@@ -99,27 +59,28 @@
       <div>
         <a href="#inicio">Inicio</a>
         <a href="#portafolio2">Portafolio</a>
-        <a href="#contacto">Contacto</a>
+        <a href="#reel">Reel</a>
       </div>
     </nav>
   </header>
 
-  <section id="inicio" class="hero-video">
-    <video class="autoVideo" autoplay muted playsinline loop preload="auto" poster="/assets/video1-poster.jpg">
-      <source src="/assets/video1.mp4?v=2" type="video/mp4">
+  <!-- HERO -->
+  <section class="hero-video" id="inicio">
+    <video autoplay muted loop playsinline>
+      <source src="/assets/video1.mp4" type="video/mp4">
     </video>
-    <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>Gabriel Muñoz</h1>
       <h2>Realizador Audiovisual</h2>
     </div>
   </section>
 
+  <!-- VIDEO 2 -->
   <section id="portafolio2" class="media-split left">
     <div class="media">
       <div class="video-wrap">
-        <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
-          <source src="/assets/video2.mp4?v=1" type="video/mp4">
+        <video autoplay muted loop playsinline>
+          <source src="/assets/video2.mp4" type="video/mp4">
         </video>
         <div class="video-caption bl">Montaje comercial - Top Chef con Betano</div>
       </div>
@@ -127,53 +88,38 @@
     <div class="copy">
       <div class="inner">
         <h3>Top Chef x Betano</h3>
-        <p>Breve descripción del aporte creativo y técnico en la pieza: montaje, ritmos, narrativa y tratamiento de color. (Texto de ejemplo, lo ajustamos con tu copy final).</p>
+        <p>Breve descripción del aporte creativo y técnico en la pieza: montaje, ritmos, narrativa y tratamiento de color.</p>
       </div>
     </div>
   </section>
 
-  <section id="verticales" class="vertical-grid">
-    <div class="vertical-col"><video class="autoVideo" autoplay muted playsinline loop preload="metadata"><source src="/assets/vertical1.mp4?v=1" type="video/mp4"></video></div>
-    <div class="vertical-col"><video class="autoVideo" autoplay muted playsinline loop preload="metadata"><source src="/assets/vertical2.mp4?v=1" type="video/mp4"></video></div>
-    <div class="vertical-col"><video class="autoVideo" autoplay muted playsinline loop preload="metadata"><source src="/assets/vertical3.mp4?v=1" type="video/mp4"></video></div>
-  </section>
-
+  <!-- VIDEO 3 -->
   <section id="portafolio3" class="media-split right">
     <div class="copy">
       <div class="inner">
         <h3>Junta Chile Mini Coopers</h3>
-        <p>Breve relato del rol (realizador) y foco audiovisual: cobertura dinámica, dirección de cámara y cohesión narrativa. (Texto de ejemplo editable).</p>
+        <p>Breve relato del rol (realizador) y foco audiovisual: cobertura dinámica, dirección de cámara y cohesión narrativa.</p>
       </div>
     </div>
     <div class="media">
       <div class="video-wrap">
-        <video class="autoVideo" autoplay muted playsinline webkit-playsinline loop preload="auto">
-          <source src="/assets/video3.mp4?v=1" type="video/mp4">
+        <video autoplay muted loop playsinline>
+          <source src="/assets/video3.mp4" type="video/mp4">
         </video>
         <div class="video-caption br">Realizador "Junta Chile Minicoopers"</div>
       </div>
     </div>
   </section>
 
-  <section id="reel" class="split-section">
-    <div class="split-container">
-      <div class="split-video">
-        <video controls playsinline preload="metadata" poster="/assets/reel-poster.jpg">
-          <source src="/assets/reel.mp4?v=1" type="video/mp4">
-          Tu navegador no soporta video HTML5.
-        </video>
-      </div>
-      <div class="split-text">
-        <div class="inner">
-          <h2>Reel Audiovisual</h2>
-          <p>Un montaje breve con lo mejor de mi trabajo reciente: dirección, cámara, color y montaje. Reproduce con sonido para apreciar el diseño sonoro y la musicalización.</p>
-        </div>
-      </div>
-    </div>
+  <!-- REEL -->
+  <section id="reel" class="reel-section">
+    <video controls poster="/assets/reel-poster.jpg">
+      <source src="/assets/reel.mp4" type="video/mp4">
+    </video>
+    <h2>Reel Audiovisual</h2>
+    <p>Un montaje breve con lo mejor de mi trabajo reciente: dirección, cámara, color y montaje. Reproduce con sonido para apreciar el diseño sonoro y la musicalización.</p>
   </section>
 
-  <footer>
-    <p>&copy; 2025 Gabriel Muñoz | Realizador Audiovisual</p>
-  </footer>
+  <footer style="text-align:center;padding:2rem;background:#000">© 2025 Gabriel Muñoz | Realizador Audiovisual</footer>
 </body>
 </html>
